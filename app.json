@@ -10,7 +10,8 @@
     "newArchEnabled": true,
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.anonymous.MyLife"
+      "bundleIdentifier": "com.anonymous.MyLife",
+      "userInterfaceStyle": "automatic"
     },
     "android": {
       "adaptiveIcon": {
