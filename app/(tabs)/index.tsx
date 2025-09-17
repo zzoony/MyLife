@@ -1,125 +1,207 @@
-import { 
-  StyleSheet, 
-  View, 
-  Text, 
-  Image, 
+import {
+  StyleSheet,
+  View,
+  Image,
   Dimensions,
   Platform,
   ScrollView,
   SafeAreaView
 } from 'react-native';
 
+import { ThemedText } from '@/components/themed-text';
+import { ThemedView } from '@/components/themed-view';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { BlurView } from '@/components/ui/blur-view';
+import { useThemeColor } from '@/hooks/use-theme-color';
+import { Spacing, BorderRadius, Typography } from '@/constants/theme';
+
 const { width, height } = Dimensions.get('window');
 
 export default function HomeScreen() {
+  const backgroundColor = useThemeColor({}, 'background');
+  const accentColor = useThemeColor({}, 'accent');
+  const borderColor = useThemeColor({}, 'border');
+  const cardBackground = useThemeColor({}, 'card');
+
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView 
+    <SafeAreaView style={[styles.safeArea, { backgroundColor }]}>
+      <ScrollView
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
         bounces={true}
       >
-        {/* Background Gradient Effect */}
-        <View style={styles.backgroundGradient} />
-        
-        {/* Main Container */}
-        <View style={styles.container}>
-          {/* Profile Card */}
-          <View style={styles.profileCard}>
-            {/* Header Section with Badge */}
-            <View style={styles.headerSection}>
+        {/* Hero Section with Gradient Background */}
+        <View style={styles.heroSection}>
+          {/* Background Gradient */}
+          <View style={[styles.backgroundGradient, { backgroundColor: accentColor }]} />
+
+          {/* Hero Content */}
+          <View style={styles.heroContent}>
+            <ThemedText type="hero" style={styles.heroTitle}>
+              MyLife
+            </ThemedText>
+            <ThemedText type="secondary" style={styles.heroSubtitle}>
+              Plan and build your digital life
+            </ThemedText>
+
+            {/* CTA Buttons */}
+            <View style={styles.ctaContainer}>
+              <Button variant="primary" size="large" style={styles.ctaButton}>
+                Get Started
+              </Button>
+              <Button variant="ghost" size="large" style={styles.ctaButton}>
+                Learn More
+              </Button>
+            </View>
+          </View>
+
+          {/* Profile Card with Blur Effect */}
+          <BlurView intensity="medium" style={styles.profileBlurContainer}>
+            <Card variant="bordered" padding="large" style={styles.profileCard}>
+              {/* Status Badge */}
               <View style={styles.statusBadge}>
-                <View style={styles.statusDot} />
-                <Text style={styles.statusText}>활동 중</Text>
+                <View style={[styles.statusDot, { backgroundColor: '#10B981' }]} />
+                <ThemedText type="small">Online</ThemedText>
               </View>
-            </View>
-            
-            {/* Profile Image Container */}
-            <View style={styles.imageWrapper}>
-              <View style={styles.imageGradientBorder}>
-                <View style={styles.imageContainer}>
-                  <Image
-                    source={{ uri: 'https://via.placeholder.com/200/667eea/ffffff?text=Profile' }}
-                    style={styles.profileImage}
-                  />
+
+              {/* Profile Image */}
+              <View style={styles.imageWrapper}>
+                <View style={[styles.imageGradientBorder, { backgroundColor: accentColor }]}>
+                  <View style={styles.imageContainer}>
+                    <Image
+                      source={{ uri: 'https://via.placeholder.com/200/5E6AD2/ffffff?text=Profile' }}
+                      style={styles.profileImage}
+                    />
+                  </View>
+                </View>
+                {/* Verified Badge */}
+                <View style={[styles.verifiedBadge, { backgroundColor: accentColor }]}>
+                  <ThemedText style={styles.verifiedText}>✓</ThemedText>
                 </View>
               </View>
-              {/* Verified Badge */}
-              <View style={styles.verifiedBadge}>
-                <Text style={styles.verifiedText}>✓</Text>
+
+              {/* Profile Info */}
+              <View style={styles.profileInfo}>
+                <ThemedText type="h2" style={styles.profileName}>
+                  김철수
+                </ThemedText>
+                <ThemedText type="secondary" style={styles.profileTitle}>
+                  Senior Developer
+                </ThemedText>
+                <ThemedText type="caption" style={styles.profileDescription}>
+                  Building the future, one line at a time
+                </ThemedText>
               </View>
+            </Card>
+          </BlurView>
+        </View>
+
+        {/* Main Content Container */}
+        <View style={styles.container}>
+          {/* Stats Section */}
+          <View style={styles.sectionContainer}>
+            <ThemedText type="h3" style={styles.sectionTitle}>
+              Statistics
+            </ThemedText>
+            <View style={styles.statsGrid}>
+              <Card variant="default" padding="medium" style={styles.statCard}>
+                <ThemedText type="h2" style={[styles.statNumber, { color: accentColor }]}>
+                  3+
+                </ThemedText>
+                <ThemedText type="small">Years</ThemedText>
+                <ThemedText type="caption">Experience</ThemedText>
+              </Card>
+              <Card variant="default" padding="medium" style={styles.statCard}>
+                <ThemedText type="h2" style={[styles.statNumber, { color: accentColor }]}>
+                  50+
+                </ThemedText>
+                <ThemedText type="small">Projects</ThemedText>
+                <ThemedText type="caption">Completed</ThemedText>
+              </Card>
+              <Card variant="default" padding="medium" style={styles.statCard}>
+                <ThemedText type="h2" style={[styles.statNumber, { color: accentColor }]}>
+                  4.9
+                </ThemedText>
+                <ThemedText type="small">Rating</ThemedText>
+                <ThemedText type="caption">Average</ThemedText>
+              </Card>
             </View>
-            
-            {/* Profile Name and Title */}
-            <View style={styles.profileInfo}>
-              <Text style={styles.profileName}>김철수</Text>
-              <Text style={styles.profileTitle}>Senior Developer</Text>
-              <Text style={styles.profileDescription}>
-                꿈을 향해 달려가는 개발자
-              </Text>
-            </View>
-            
-            {/* Stats Section */}
-            <View style={styles.statsContainer}>
-              <View style={styles.statCard}>
-                <Text style={styles.statNumber}>3+</Text>
-                <Text style={styles.statLabel}>Years</Text>
-                <Text style={styles.statDesc}>경력</Text>
-              </View>
-              <View style={styles.statDivider} />
-              <View style={styles.statCard}>
-                <Text style={styles.statNumber}>50+</Text>
-                <Text style={styles.statLabel}>Projects</Text>
-                <Text style={styles.statDesc}>프로젝트</Text>
-              </View>
-              <View style={styles.statDivider} />
-              <View style={styles.statCard}>
-                <Text style={styles.statNumber}>4.9</Text>
-                <Text style={styles.statLabel}>Rating</Text>
-                <Text style={styles.statDesc}>평점</Text>
-              </View>
-            </View>
-            
-            {/* Skills Section */}
-            <View style={styles.skillsSection}>
-              <Text style={styles.sectionTitle}>전문 분야</Text>
+          </View>
+
+          {/* Skills Section */}
+          <View style={styles.sectionContainer}>
+            <ThemedText type="h3" style={styles.sectionTitle}>
+              Technical Stack
+            </ThemedText>
+            <Card variant="bordered" padding="large">
               <View style={styles.skillsContainer}>
-                <View style={styles.skillBadge}>
-                  <Text style={styles.skillText}>React Native</Text>
-                </View>
-                <View style={styles.skillBadge}>
-                  <Text style={styles.skillText}>TypeScript</Text>
-                </View>
-                <View style={styles.skillBadge}>
-                  <Text style={styles.skillText}>Node.js</Text>
-                </View>
-                <View style={styles.skillBadge}>
-                  <Text style={styles.skillText}>UI/UX</Text>
-                </View>
+                {['React Native', 'TypeScript', 'Node.js', 'GraphQL', 'AWS', 'Docker'].map((skill) => (
+                  <View key={skill} style={[styles.skillBadge, { borderColor }]}>
+                    <ThemedText type="small">{skill}</ThemedText>
+                  </View>
+                ))}
               </View>
-            </View>
-            
-            {/* Contact Section */}
-            <View style={styles.contactSection}>
-              <View style={styles.contactButton}>
-                <Text style={styles.contactButtonText}>프로필 편집</Text>
-              </View>
+            </Card>
+          </View>
+
+          {/* Features Grid */}
+          <View style={styles.sectionContainer}>
+            <ThemedText type="h3" style={styles.sectionTitle}>
+              Features
+            </ThemedText>
+            <View style={styles.featureGrid}>
+              <Card variant="elevated" padding="medium" style={styles.featureCard}>
+                <ThemedText style={styles.featureIcon}>⚡</ThemedText>
+                <ThemedText type="body" style={styles.featureTitle}>
+                  Lightning Fast
+                </ThemedText>
+                <ThemedText type="caption" style={styles.featureDescription}>
+                  Optimized performance with modern architecture
+                </ThemedText>
+              </Card>
+              <Card variant="elevated" padding="medium" style={styles.featureCard}>
+                <ThemedText style={styles.featureIcon}>🛡️</ThemedText>
+                <ThemedText type="body" style={styles.featureTitle}>
+                  Secure by Default
+                </ThemedText>
+                <ThemedText type="caption" style={styles.featureDescription}>
+                  Enterprise-grade security built in
+                </ThemedText>
+              </Card>
+              <Card variant="elevated" padding="medium" style={styles.featureCard}>
+                <ThemedText style={styles.featureIcon}>🎨</ThemedText>
+                <ThemedText type="body" style={styles.featureTitle}>
+                  Beautiful Design
+                </ThemedText>
+                <ThemedText type="caption" style={styles.featureDescription}>
+                  Minimalist and modern UI/UX
+                </ThemedText>
+              </Card>
+              <Card variant="elevated" padding="medium" style={styles.featureCard}>
+                <ThemedText style={styles.featureIcon}>🚀</ThemedText>
+                <ThemedText type="body" style={styles.featureTitle}>
+                  Scalable
+                </ThemedText>
+                <ThemedText type="caption" style={styles.featureDescription}>
+                  Built to grow with your needs
+                </ThemedText>
+              </Card>
             </View>
           </View>
-          
-          {/* Additional Info Cards */}
-          <View style={styles.infoCardsContainer}>
-            <View style={styles.miniCard}>
-              <Text style={styles.miniCardIcon}>📍</Text>
-              <Text style={styles.miniCardTitle}>위치</Text>
-              <Text style={styles.miniCardValue}>서울, 대한민국</Text>
-            </View>
-            <View style={styles.miniCard}>
-              <Text style={styles.miniCardIcon}>🎓</Text>
-              <Text style={styles.miniCardTitle}>학력</Text>
-              <Text style={styles.miniCardValue}>컴퓨터공학</Text>
-            </View>
-          </View>
+
+          {/* CTA Section */}
+          <Card variant="default" padding="large" style={styles.ctaCard}>
+            <ThemedText type="h3" style={styles.ctaCardTitle}>
+              Ready to get started?
+            </ThemedText>
+            <ThemedText type="caption" style={styles.ctaCardDescription}>
+              Join thousands of developers building amazing products
+            </ThemedText>
+            <Button variant="primary" size="large" style={styles.ctaCardButton}>
+              Start Building
+            </Button>
+          </Card>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -129,241 +211,175 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: '#f7f9fc',
   },
   scrollContainer: {
     flexGrow: 1,
+  },
+  heroSection: {
+    position: 'relative',
+    minHeight: height * 0.6,
+    marginBottom: Spacing.xxl,
   },
   backgroundGradient: {
     position: 'absolute',
     top: 0,
     left: 0,
     right: 0,
-    height: height * 0.4,
-    backgroundColor: '#667eea',
-    opacity: 0.05,
+    height: height * 0.5,
+    opacity: 0.1,
   },
-  container: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingVertical: 20,
+  heroContent: {
+    alignItems: 'center',
+    paddingTop: Spacing.xxxl,
+    paddingHorizontal: Spacing.lg,
+  },
+  heroTitle: {
+    marginBottom: Spacing.sm,
+    textAlign: 'center',
+  },
+  heroSubtitle: {
+    marginBottom: Spacing.xl,
+    textAlign: 'center',
+  },
+  ctaContainer: {
+    flexDirection: 'row',
+    gap: Spacing.md,
+    marginBottom: Spacing.xxl,
+  },
+  ctaButton: {
+    minWidth: 120,
+  },
+  profileBlurContainer: {
+    marginHorizontal: Spacing.lg,
+    borderRadius: BorderRadius.card,
   },
   profileCard: {
-    backgroundColor: '#ffffff',
-    borderRadius: 24,
-    padding: 24,
-    marginTop: 10,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#667eea',
-        shadowOffset: { width: 0, height: 12 },
-        shadowOpacity: 0.15,
-        shadowRadius: 24,
-      },
-      android: {
-        elevation: 12,
-      },
-    }),
-  },
-  headerSection: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginBottom: -10,
+    backgroundColor: 'transparent',
+    alignItems: 'center',
   },
   statusBadge: {
+    position: 'absolute',
+    top: Spacing.md,
+    right: Spacing.md,
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#e8f5e9',
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 20,
+    gap: Spacing.xs,
   },
   statusDot: {
     width: 8,
     height: 8,
     borderRadius: 4,
-    backgroundColor: '#4caf50',
-    marginRight: 6,
-  },
-  statusText: {
-    fontSize: 12,
-    color: '#4caf50',
-    fontWeight: '600',
   },
   imageWrapper: {
-    alignItems: 'center',
-    marginVertical: 20,
+    position: 'relative',
+    marginBottom: Spacing.lg,
   },
   imageGradientBorder: {
     padding: 3,
-    borderRadius: 80,
-    backgroundColor: '#667eea',
+    borderRadius: 75,
   },
   imageContainer: {
-    backgroundColor: '#ffffff',
-    borderRadius: 77,
+    borderRadius: 72,
     padding: 4,
   },
   profileImage: {
-    width: 140,
-    height: 140,
-    borderRadius: 70,
+    width: 120,
+    height: 120,
+    borderRadius: 60,
   },
   verifiedBadge: {
     position: 'absolute',
-    bottom: 5,
-    right: width / 2 - 85,
-    backgroundColor: '#667eea',
+    bottom: 0,
+    right: 0,
     width: 28,
     height: 28,
     borderRadius: 14,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 3,
-    borderColor: '#ffffff',
+    borderColor: '#080909',
   },
   verifiedText: {
-    color: '#ffffff',
+    color: '#FFFFFF',
     fontSize: 16,
     fontWeight: 'bold',
   },
   profileInfo: {
     alignItems: 'center',
-    marginBottom: 32,
   },
   profileName: {
-    fontSize: 32,
-    fontWeight: Platform.OS === 'ios' ? '700' : 'bold',
-    color: '#1a1a2e',
-    marginBottom: 4,
-    letterSpacing: -0.5,
+    marginBottom: Spacing.xs,
   },
   profileTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#667eea',
-    marginBottom: 8,
+    marginBottom: Spacing.sm,
   },
   profileDescription: {
-    fontSize: 15,
-    color: '#6b7280',
     textAlign: 'center',
-    marginTop: 8,
-    lineHeight: 22,
-    paddingHorizontal: 20,
   },
-  statsContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    backgroundColor: '#f8fafc',
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 28,
+  container: {
+    paddingHorizontal: Spacing.lg,
+    paddingBottom: Spacing.xxl,
   },
-  statCard: {
-    alignItems: 'center',
-    flex: 1,
-  },
-  statNumber: {
-    fontSize: 24,
-    fontWeight: Platform.OS === 'ios' ? '700' : 'bold',
-    color: '#667eea',
-    marginBottom: 2,
-  },
-  statLabel: {
-    fontSize: 12,
-    color: '#1a1a2e',
-    fontWeight: '600',
-    marginBottom: 2,
-  },
-  statDesc: {
-    fontSize: 11,
-    color: '#9ca3af',
-  },
-  statDivider: {
-    width: 1,
-    backgroundColor: '#e5e7eb',
-    marginVertical: 8,
-  },
-  skillsSection: {
-    marginBottom: 28,
+  sectionContainer: {
+    marginBottom: Spacing.xl,
   },
   sectionTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    color: '#1a1a2e',
-    marginBottom: 12,
+    marginBottom: Spacing.md,
+  },
+  statsGrid: {
+    flexDirection: 'row',
+    gap: Spacing.md,
+  },
+  statCard: {
+    flex: 1,
+    alignItems: 'center',
+  },
+  statNumber: {
+    marginBottom: Spacing.xs,
   },
   skillsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 8,
+    gap: Spacing.sm,
   },
   skillBadge: {
-    backgroundColor: '#f3f4f6',
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 20,
-    marginRight: 8,
-    marginBottom: 8,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: Spacing.sm,
+    borderRadius: BorderRadius.button,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
   },
-  skillText: {
-    fontSize: 13,
-    color: '#4b5563',
-    fontWeight: '500',
-  },
-  contactSection: {
-    marginTop: 4,
-  },
-  contactButton: {
-    paddingVertical: 16,
-    borderRadius: 14,
-    alignItems: 'center',
-    backgroundColor: '#667eea',
-  },
-  contactButtonText: {
-    color: '#ffffff',
-    fontSize: 16,
-    fontWeight: '600',
-    letterSpacing: 0.5,
-  },
-  infoCardsContainer: {
+  featureGrid: {
     flexDirection: 'row',
-    gap: 12,
-    marginTop: 16,
+    flexWrap: 'wrap',
+    gap: Spacing.md,
   },
-  miniCard: {
-    flex: 1,
-    backgroundColor: '#ffffff',
-    borderRadius: 16,
-    padding: 16,
-    alignItems: 'center',
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.08,
-        shadowRadius: 12,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
+  featureCard: {
+    width: (width - Spacing.lg * 2 - Spacing.md) / 2,
   },
-  miniCardIcon: {
-    fontSize: 24,
-    marginBottom: 8,
+  featureIcon: {
+    fontSize: 32,
+    marginBottom: Spacing.sm,
   },
-  miniCardTitle: {
-    fontSize: 12,
-    color: '#9ca3af',
-    marginBottom: 4,
-  },
-  miniCardValue: {
-    fontSize: 14,
-    color: '#1a1a2e',
+  featureTitle: {
     fontWeight: '600',
+    marginBottom: Spacing.xs,
+  },
+  featureDescription: {
+    opacity: 0.8,
+  },
+  ctaCard: {
+    alignItems: 'center',
+    marginTop: Spacing.xl,
+  },
+  ctaCardTitle: {
+    marginBottom: Spacing.sm,
+    textAlign: 'center',
+  },
+  ctaCardDescription: {
+    marginBottom: Spacing.lg,
+    textAlign: 'center',
+  },
+  ctaCardButton: {
+    minWidth: 200,
   },
 });
