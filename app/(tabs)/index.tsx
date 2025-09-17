@@ -73,11 +73,11 @@ export default function HomeScreen() {
                       source={{ uri: 'https://via.placeholder.com/200/5E6AD2/ffffff?text=Profile' }}
                       style={styles.profileImage}
                     />
+                    {/* Verified Badge */}
+                    <View style={[styles.verifiedBadge, { backgroundColor: accentColor }]}>
+                      <ThemedText style={styles.verifiedText}>✓</ThemedText>
+                    </View>
                   </View>
-                </View>
-                {/* Verified Badge */}
-                <View style={[styles.verifiedBadge, { backgroundColor: accentColor }]}>
-                  <ThemedText style={styles.verifiedText}>✓</ThemedText>
                 </View>
               </View>
 
@@ -279,6 +279,7 @@ const styles = StyleSheet.create({
     borderRadius: 75,
   },
   imageContainer: {
+    position: 'relative',
     borderRadius: 72,
     padding: 4,
   },
@@ -289,8 +290,8 @@ const styles = StyleSheet.create({
   },
   verifiedBadge: {
     position: 'absolute',
-    bottom: 0,
-    right: 0,
+    bottom: 5,
+    right: 5,
     width: 28,
     height: 28,
     borderRadius: 14,
